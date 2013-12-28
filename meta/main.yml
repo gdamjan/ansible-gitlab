@@ -1,5 +1,4 @@
 ---
----
 galaxy_info:
   author: Damjan Georgievski
   description: a role that downloads and install gitlab
