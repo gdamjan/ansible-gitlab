@@ -1,0 +1,26 @@
+---
+# GitLab Shell
+
+- name: ensure Gitlab-Shell git repository is cloned
+  git: repo=https://github.com/gitlabhq/gitlab-shell.git dest=/home/{{ gitlab_user }}/gitlab-shell version={{ gitlab_shell_version}}
+
+- name: ensure gitlab-shell config is written
+  template: src=gitlab_shell_config.yml dest=/home/{{ gitlab_user }}/gitlab-shell/config.yml mode=0644
+
+## actions taken from gitlab-shell/bin/install
+- name: .ssh directory
+  file: dest=/home/{{ gitlab_user }}/.ssh state=directory mode=0700 owner={{ gitlab_user }} group={{ gitlab_user }}
+
+- name: .ssh/config for git user
+  template: src=user_ssh_config dest=/home/{{ gitlab_user }}/.ssh/config owner={{ gitlab_user }} group={{ gitlab_user }} mode=0600
+
+# until state=touch is implemented do it manually https://github.com/ansible/ansible/issues/4097
+- name: touch authorized_keys file
+  command: touch /home/{{ gitlab_user }}/.ssh/authorized_keys creates=/home/{{ gitlab_user }}/.ssh/authorized_keys
+
+- name: authorized_keys file with proper permisions
+  file: dest=/home/{{ gitlab_user }}/.ssh/authorized_keys mode=0600 owner={{ gitlab_user }} group={{ gitlab_user }}
+
+## TODO maybe:
+# chmod -R ug+rwX,o-rwx /home/git/repositories: false
+# find /home/git/repositories -type d -print0 | xargs -0 chmod g+s: false

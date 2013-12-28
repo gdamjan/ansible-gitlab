@@ -1,0 +1,3 @@
+[user]
+        name = GitLab
+        email = gitlab@{{ gitlab_hostname if gitlab_hostname or ansible_hostname }}

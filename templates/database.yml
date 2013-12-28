@@ -1,0 +1,8 @@
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: {{ gitlab_db_name }}
+  username: {{ gitlab_db_user }}
+  password: {{ gitlab_db_passwd }}
+  socket: /var/run/mysqld/mysqld.sock
+

@@ -1,0 +1,28 @@
+---
+- name: ensure gitlab dependencies are installed from apt
+  apt: pkg={{ item }} state=present
+  with_items:
+    - build-essential
+    - zlib1g-dev
+    - libyaml-dev
+    - libssl-dev
+    - libgdbm-dev
+    - libreadline-dev
+    - libncurses5-dev
+    - libffi-dev
+    - curl
+    - git-core
+    - redis-server
+    - checkinstall
+    - libxml2-dev
+    - libxslt1-dev
+    - libcurl4-openssl-dev
+    - libicu-dev
+    - mysql-server
+    - mysql-client
+    - libmysqlclient-dev
+    - ruby1.9.1
+    - bundler
+    - python2.7
+    - python-mysqldb # Required for ansible mysql module to work, see: http://ansible.cc/docs/modules.html#mysql-user
+    - python-docutils

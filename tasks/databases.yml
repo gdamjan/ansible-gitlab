@@ -1,0 +1,15 @@
+---
+# one day add postgresql here too, depending on a variable
+#
+#
+- name: ensure mysql is running
+  service: name=mysql state=started enabled=yes
+
+- name: ensure redis is running
+  service: name=redis-server state=started enabled=yes
+
+- name: ensure database for gitlab exists
+  mysql_db: state=present name={{ gitlab_db_name }} collation=utf8_unicode_ci encoding=utf8
+
+- name: ensure database user for gitlab is present and has privleges
+  mysql_user: state=present host=localhost name={{ gitlab_db_user }} password={{ gitlab_db_passwd }} priv={{ gitlab_db_name }}.*:ALL

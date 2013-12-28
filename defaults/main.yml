@@ -1,0 +1,13 @@
+---
+gitlab_branch: 6-3-stable
+gitlab_shell_version: v1.7.9
+
+gitlab_db_type: mysql
+gitlab_db_name: gitlab
+gitlab_db_user: gitlab
+gitlab_db_passwd: yie6AiGh
+
+gitlab_user: git
+gitlab_uwsgi_port: 4001
+gitlab_ssh_port: 22
+

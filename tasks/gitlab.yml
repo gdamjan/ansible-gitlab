@@ -1,0 +1,82 @@
+---
+## TODO: parametrize
+
+- name: ensure there's a user for Gitlab
+  user: name={{ gitlab_user }} comment="GitLab" createhome=yes
+
+- name: Clone GitLab source code from git.
+  git: repo=https://github.com/gitlabhq/gitlabhq.git dest=/home/{{ gitlab_user }}/gitlab version={{ gitlab_branch }}
+  changed_when: False
+
+## setup file system hierarchy and permissions
+- name: ensure GitLab can write to the 'log' directory
+  file: path=/home/{{ gitlab_user }}/log state=directory recurse=yes mode=0700 owner={{ gitlab_user }}
+
+- name: ensure GitLab can write to 'tmp'
+  file: path=/home/{{ gitlab_user }}/tmp state=directory recurse=yes mode=0700 owner={{ gitlab_user }}
+
+- name: ensure GitLab can write to 'tmp/pids'
+  file: path=/home/{{ gitlab_user }}/tmp/pids state=directory recurse=yes mode=0700 owner={{ gitlab_user }}
+
+- name: ensure GitLab can write to 'public/uploads'
+  file: path=/home/{{ gitlab_user }}/gitlab/public/uploads state=directory recurse=yes mode=0700 owner={{ gitlab_user }}
+
+# would be nice if next 2 can be merged
+- name: remove GitLab 'log' directory
+  file: state=absent path=/home/{{ gitlab_user }}/gitlab/log
+
+- name: symlink GitLab 'log' directory
+  file: state=link src=/home/{{ gitlab_user }}/log dest=/home/{{ gitlab_user }}/gitlab/log force=yes
+
+# would be nice if next 2 can be merged
+- name: remove GitLab 'tmp' directory
+  file: state=absent path=/home/{{ gitlab_user }}/gitlab/tmp
+
+- name: symlink GitLab 'tmp' directory
+  file: state=link src=/home/{{ gitlab_user }}/tmp dest=/home/{{ gitlab_user }}/gitlab/tmp force=yes
+
+- name: ensure directory for satellites exists
+  file: state=directory path=/home/{{ gitlab_user }}/gitlab-satellites owner={{ gitlab_user }} group={{ gitlab_user }} mode=0700
+
+- name: ensure directory for repositories exists
+  file: state=directory path=/home/{{ gitlab_user }}/repositories owner={{ gitlab_user }} group={{ gitlab_user }} mode=2770
+
+## config files
+- name: .gitconfig for git user
+  template: src=gitconfig dest=/home/{{ gitlab_user }}/.gitconfig owner={{ gitlab_user }} group={{ gitlab_user }} mode=0644
+
+- name: ensure GitLab config file exists
+  template: src=gitlab.yml dest=/home/{{ gitlab_user }}/gitlab/config/gitlab.yml mode=0640 owner=root group={{ gitlab_user }}
+
+- name: ensure uwsgi config file exists
+  template: src=uwsgi.ini dest=/etc/uwsgi/vassals/gitlab.ini mode=0644 owner=root group=root
+
+- name: ensure database config is written
+  template: src=database.yml dest=/home/{{ gitlab_user }}/gitlab/config/database.yml mode=0640 owner=root group={{ gitlab_user }}
+
+- name: python2 symlink
+  file: state=link src=/usr/bin/python2.7 dest=/usr/bin/python2
+
+- name: ensure gem charlock_holmes is installed
+  gem: name=charlock_holmes version=0.6.9.4 state=present
+
+- name: ensure GitLab bundle is installed
+  command: chdir=/home/{{ gitlab_user }}/gitlab bundle install --deployment --without development test postgres aws
+  changed_when: False
+
+- name: run 'rake gitlab:setup' task
+  shell: >
+      creates=/home/{{ gitlab_user }}/gitlab:setup
+      chdir=/home/{{ gitlab_user }}/gitlab
+      yes 'yes'
+      |  bundle exec rake gitlab:setup RAILS_ENV=production
+      && touch /home/{{ gitlab_user }}/gitlab:setup
+
+#- name: Gitlab upgrade
+#  shell: >
+#    chdir=/home/{{ gitlab_user }}/gitlab
+#    bundle exec rake db:migrate RAILS_ENV=production
+#    bundle exec rake cache:clear RAILS_ENV=production
+#    bundle exec rake assets:clean  RAILS_ENV=production
+#    bundle exec rake assets:precompile  RAILS_ENV=production
+#

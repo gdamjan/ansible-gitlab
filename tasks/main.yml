@@ -1,0 +1,10 @@
+---
+- include: packages.yml
+- include: databases.yml
+- include: gitlab.yml
+- include: gitlab-shell.yml
+- include: nginx.yml
+
+## TODO
+# AllowUsers git ... in /etc/ssh/sshd_config
+# check what happens with the assets

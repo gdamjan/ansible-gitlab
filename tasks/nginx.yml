@@ -1,0 +1,16 @@
+---
+# setup nginx ... posibly, this could be a separate role with parameters
+- name: Making sure nginx is present...
+  apt: state=present pkg=nginx
+
+- name: Making sure that GitLab Nginx site is available...
+  template: src=nginx.conf dest=/etc/nginx/sites-available/gitlab mode=0755
+  notify: restart nginx
+
+- name: Making sure that the default Nginx site is not enabled...
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify: restart nginx
+
+- name: Making sure that the GitLab Nginx site is enabled...
+  file: src=/etc/nginx/sites-available/gitlab path=/etc/nginx/sites-enabled/gitlab state=link
+  notify: restart nginx
