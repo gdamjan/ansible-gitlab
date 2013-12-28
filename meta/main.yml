@@ -1,3 +1,18 @@
 ---
+---
+galaxy_info:
+  author: Damjan Georgievski
+  description: a role that downloads and install gitlab
+  license: BSD
+  min_ansible_version: 1.4
+  platforms:
+    - name: Ubuntu
+      versions:
+      - saucy
+    - name: Debian
+      versions:
+      - wheezy
+  categories:
+    - web
 dependencies:
   - gdamjan.uwsgi
