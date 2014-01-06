@@ -57,9 +57,6 @@
 - name: python2 symlink
   file: state=link src=/usr/bin/python2.7 dest=/usr/bin/python2
 
-- name: ensure gem charlock_holmes is installed
-  gem: name=charlock_holmes version=0.6.9.4 state=present
-
 - name: ensure GitLab bundle is installed
   command: chdir=/home/{{ gitlab_user }}/gitlab bundle install --deployment --without development test postgres aws
   changed_when: False
