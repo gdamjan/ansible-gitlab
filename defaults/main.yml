@@ -1,6 +1,6 @@
 ---
-gitlab_branch: 6-3-stable
-gitlab_shell_version: v1.7.9
+gitlab_branch: 6-4-stable
+gitlab_shell_version: v1.8.0
 
 gitlab_db_type: mysql
 gitlab_db_name: gitlab
