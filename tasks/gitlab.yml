@@ -62,6 +62,7 @@
   changed_when: False
 
 - name: run 'rake gitlab:setup' task
+  sudo_user: "{{ gitlab_user }}"
   shell: >
       creates=/home/{{ gitlab_user }}/gitlab:setup
       chdir=/home/{{ gitlab_user }}/gitlab
