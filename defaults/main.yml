@@ -11,3 +11,4 @@ gitlab_user: git
 gitlab_uwsgi_port: 4001
 gitlab_ssh_port: 22
 
+gitlab_hostname: ""
