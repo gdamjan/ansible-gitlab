@@ -36,7 +36,7 @@
   file: state=link src=/home/{{ gitlab_user }}/tmp dest=/home/{{ gitlab_user }}/gitlab/tmp force=yes
 
 - name: ensure directory for satellites exists
-  file: state=directory path=/home/{{ gitlab_user }}/gitlab-satellites owner={{ gitlab_user }} group={{ gitlab_user }} mode=0700
+  file: state=directory path=/home/{{ gitlab_user }}/gitlab-satellites owner={{ gitlab_user }} group={{ gitlab_user }} mode=0750
 
 - name: ensure directory for repositories exists
   file: state=directory path=/home/{{ gitlab_user }}/repositories owner={{ gitlab_user }} group={{ gitlab_user }} mode=2770
