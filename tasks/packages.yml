@@ -26,3 +26,6 @@
     - python2.7
     - python-mysqldb # Required for ansible mysql module to work, see: http://ansible.cc/docs/modules.html#mysql-user
     - python-docutils
+    - pkg-config
+    - cmake
+    - libkrb5-dev

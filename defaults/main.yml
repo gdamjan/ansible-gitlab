@@ -1,14 +1,17 @@
 ---
-gitlab_branch: 7-0-stable
-gitlab_shell_version: v1.9.6
+gitlab_branch: 7-7-stable
+gitlab_shell_version: v2.4.1
+
+gitlab_user: git
+gitlab_ssh_port: 22
+
+gitlab_deploy_local_mysql: false
+gitlab_deploy_local_redis: false
 
 gitlab_db_type: mysql
 gitlab_db_name: gitlab
 gitlab_db_user: gitlab
 gitlab_db_passwd: yie6AiGh
 
-gitlab_user: git
-gitlab_uwsgi_port: 4001
-gitlab_ssh_port: 22
-
-gitlab_hostname: ""
+gitlab_redis_host: 127.0.0.1
+gitlab_redis_port: 6379
