@@ -21,7 +21,7 @@
     - mysql-server
     - mysql-client
     - libmysqlclient-dev
-    - ruby1.9.1
+    - ruby
     - bundler
     - python2.7
     - python-mysqldb # Required for ansible mysql module to work, see: http://ansible.cc/docs/modules.html#mysql-user
