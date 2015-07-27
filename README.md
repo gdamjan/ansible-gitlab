@@ -24,7 +24,6 @@ The role uses the following variables, that you can also override:
 * `gitlab_db_user` - database user (gitlab)
 * `gitlab_db_passwd` - database password (probably should change this, it's some random string now)
 * `gitlab_user` - system user that's needed for ssh access
-* `gitlab_uwsgi_port` - port used for nginx - uwsgi communucation
 * `gitlab_ssh_port` - override if using different port for ssh (22 by default)
 
 
