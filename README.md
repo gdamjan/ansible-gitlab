@@ -32,7 +32,7 @@ Usage
 
     ansible-galaxy install gdamjan.gitlab
 
-Also check the [Ansible Galaxy](https://galaxy.ansibleworks.com/intro) about page.
+Also check the [Ansible Galaxy](https://galaxy.ansible.com/intro) about page.
 
 
 License
