@@ -1,6 +1,6 @@
 ---
-gitlab_branch: 8-5-stable
-gitlab_shell_version: v2.6.10
+gitlab_branch: 8-6-stable
+gitlab_shell_version: v2.6.11
 
 gitlab_user: git
 gitlab_ssh_port: 22
